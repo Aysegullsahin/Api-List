@@ -59,7 +59,13 @@ class ApiListAPIView(APIView):
                 query = query.filter(api_name__icontains=api_name)
             if description:
                 query = query.filter(description__icontains=description)
+
+        order = request.query_params.get('ordering')
+        if order == 'api_name':
+            query = query.order_by('api_name')
+
         serializer = ApiSerializer(query, many=True)
+
         return Response(serializer.data)
 
     def post(self, request):
