@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import path
 
 from main.views import CategoryListAPIView, CategoryDetail, ApiListAPIView, ApiDetail
+from login.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('category/', CategoryListAPIView.as_view(), name='category-list'),
     path('category/<slug:slug>/', CategoryDetail.as_view(), name='category-detail'),
+    path('login2/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    #path('logout/', views.logout_view, name='logout'),
     path('api/', ApiListAPIView.as_view(), name='api-list'),
     path('api/<slug:slug>/', ApiDetail.as_view(), name='api-detail'),
 ]

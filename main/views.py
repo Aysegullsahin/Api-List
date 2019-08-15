@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.request import Request
-
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 
@@ -14,6 +15,9 @@ from .serializers import CategorySerializer, ApiSerializer
 
 
 class CategoryListAPIView(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated, ]
+
     def get(self, request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
@@ -50,6 +54,8 @@ class CategoryDetail(APIView):
 
 
 class ApiListAPIView(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated, ]
     def get(self, request):
         query = Api.objects.filter()
         if request.query_params.get('search') == '':
